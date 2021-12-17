@@ -9,16 +9,15 @@ jobs:
   PyPyBuild:
     strategy:
       matrix:
-        build: [opencv-python, cvzone]
-        OS: [ubuntu-latest, windows-latest, macos-latest]
+        OS: [ubuntu-latest]
       fail-fast: false
     runs-on: ${{ matrix.OS }}
     steps:
       - name: Install pypy3
         run : |
-          add-apt-repository ppa:pypy/ppa
-          apt-get upgrade
-          apt-get install pypy3
+          sudo add-apt-repository ppa:pypy/ppa
+          sudo apt-get upgrade
+          sudo apt-get install pypy3
           pypy3 -m ensurepip
           pypy3 -m pip install cibuildwheel
       - name : update submodule
