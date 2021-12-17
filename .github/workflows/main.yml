@@ -26,10 +26,14 @@ jobs:
         run: |
           wget https://files.pythonhosted.org/packages/ce/d4/b2e4e5a18b1b1b7de159f28494a0b320c9624c354f82bcd135306a4c6c87/cvzone-1.5.3.tar.gz
           tar -xf cvzone-1.5.3.tar.gz
-      - name: build wheel
-        run: |
-          cd cvzone-1.5.3
-          pypy3 -m cibuildwheel --output-dir wheelhouse
+      # - name: build wheel
+      #   run: |
+      #     cd cvzone-1.5.3
+      #     pypy3 -m cibuildwheel --output-dir wheelhouse
+      - uses: RalfG/python-wheels-manylinux-build@v0.4.2-manylinux2014_x86_64  
+        with:
+          python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'    
+          package-path:  'cvzone-1.5.3'
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.9.0
         with:
