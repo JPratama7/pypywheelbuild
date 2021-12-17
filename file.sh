@@ -5,7 +5,6 @@ Linklist=(
 
 for f in "${Linklist[@]}"; do
     wget $f
-    rename '[a-z]\w+' *.gz
     tar -xf $f
 done
 
