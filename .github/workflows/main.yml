@@ -11,6 +11,18 @@ jobs:
     strategy:
       matrix:
         OS: [ubuntu-latest]
+        Link: [
+          https://files.pythonhosted.org/packages/ce/d4/b2e4e5a18b1b1b7de159f28494a0b320c9624c354f82bcd135306a4c6c87/cvzone-1.5.3.tar.gz,
+          https://files.pythonhosted.org/packages/bc/b6/e447d0302bc328f06b56dabd6742648372df63446725db56058a259dbda2/opencv-python-4.5.4.60.tar.gz
+        ]
+        rar: [
+          opencv-python-4.5.4.60.tar.gz,
+          cvzone-1.5.3.tar.gz
+        ]
+        folder: [
+          opencv-python-4.5.4.60,
+          cvzone-1.5.3
+        ]
       fail-fast: false
     runs-on: ${{ matrix.OS }}
     steps:
@@ -24,8 +36,8 @@ jobs:
           pypy3 -m pip install cibuildwheel
       - name : update submodule
         run: |
-          wget https://files.pythonhosted.org/packages/ce/d4/b2e4e5a18b1b1b7de159f28494a0b320c9624c354f82bcd135306a4c6c87/cvzone-1.5.3.tar.gz
-          tar -xf cvzone-1.5.3.tar.gz
+          wget ${{ matrix.Link }}
+          tar -xf ${{ matrix.rar }}
       # - name: build wheel
       #   run: |
       #     cd cvzone-1.5.3
@@ -33,7 +45,7 @@ jobs:
       - uses: RalfG/python-wheels-manylinux-build@v0.4.2-manylinux2014_x86_64  
         with:
           python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'    
-          package-path:  'cvzone-1.5.3'
+          package-path:  '${{ matrix.folder }}'
       - run: ls -lR
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.9.0
