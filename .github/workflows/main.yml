@@ -61,7 +61,7 @@ jobs:
           chmod +x file.sh
           ./file.sh
           ls -lR
-        with:
+        env:
           CIBW_BUILD: pp*
           CIBW_ARCHS_LINUX: auto
       - name: Upload Artifact
