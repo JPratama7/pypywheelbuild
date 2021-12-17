@@ -61,6 +61,9 @@ jobs:
           chmod +x file.sh
           ./file.sh
           ls -lR
+        with:
+          CIBW_BUILD: pp*
+          CIBW_ARCHS_LINUX: auto
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.9.0
         with:
