@@ -6,13 +6,8 @@ on:
   workflow_dispatch:
 jobs:
 
-  PyPyBuild:
-    strategy:
-      matrix:
-        OS: [ubuntu-latest]
-        Link: [https://files.pythonhosted.org/packages/ce/d4/b2e4e5a18b1b1b7de159f28494a0b320c9624c354f82bcd135306a4c6c87/cvzone-1.5.3.tar.gz , https://files.pythonhosted.org/packages/bc/b6/e447d0302bc328f06b56dabd6742648372df63446725db56058a259dbda2/opencv-python-4.5.4.60.tar.gz]
-      fail-fast: false
-    runs-on: ${{ matrix.OS }}
+  cvzone:
+    runs-on: ubuntu-latest
     steps:
       - name: Install pypy3
         run : |
@@ -24,8 +19,39 @@ jobs:
           pypy3 -m pip install cibuildwheel
       - name : update submodule
         run: |
-          wget ${{ matrix.Link }}
-          tar -xf *.tar.gz
+          wget https://files.pythonhosted.org/packages/ce/d4/b2e4e5a18b1b1b7de159f28494a0b320c9624c354f82bcd135306a4c6c87/cvzone-1.5.3.tar.gz
+          tar -xf *.tar.gz --strip-components 1
+      # - name: build wheel
+      #   run: |
+      #     cd cvzone-1.5.3
+      #     pypy3 -m cibuildwheel --output-dir wheelhouse
+      - uses: RalfG/python-wheels-manylinux-build@v0.4.2-manylinux2014_x86_64  
+        with:
+          python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'
+      - run: ls -lR
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.9.0
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: "./*/*.whl"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  OpenCV:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install pypy3
+        run : |
+          sudo add-apt-repository ppa:pypy/ppa
+          sudo apt-get update
+          sudo apt-get install pypy3
+          wget https://bootstrap.pypa.io/get-pip.py
+          pypy3 get-pip.py
+          pypy3 -m pip install cibuildwheel
+      - name : update submodule
+        run: |
+          wget https://files.pythonhosted.org/packages/bc/b6/e447d0302bc328f06b56dabd6742648372df63446725db56058a259dbda2/opencv-python-4.5.4.60.tar.gz
+          tar -xf *.tar.gz --strip-components 1
       # - name: build wheel
       #   run: |
       #     cd cvzone-1.5.3
