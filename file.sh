@@ -8,7 +8,15 @@ for f in "${Linklist[@]}"; do
     tar -xf $f
 done
 
-for dir in */ ; do
-    cd $dir
-    python -m cibuildwheel
+
+for f in *; do
+    if [ -d "$f" ]; then
+        cd $dir
+        python -m cibuildwheel
+    fi
 done
+
+# for dir in */ ; do
+#     cd $dir
+#     python -m cibuildwheel
+# done
