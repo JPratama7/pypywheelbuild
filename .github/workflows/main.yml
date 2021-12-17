@@ -72,10 +72,16 @@ jobs:
   OpenCV:
     strategy:
     matrix:
-      build: [cvzone-1.5.3, opencv-python-4.5.4.60]
+      build: ["cvzone-1.5.3", "opencv-python-4.5.4.60"]
     fail-fast: false
     runs-on: ubuntu-latest
     steps:
+      - name: Build packages for pypy3
+        uses: actions/checkout@v2.4.0
+      - name: Download Data
+        run: |
+          chmod +x file.sh
+          ./file.sh
       - name: Install pypy3
         run : |
           sudo add-apt-repository ppa:pypy/ppa
