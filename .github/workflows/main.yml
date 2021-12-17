@@ -19,10 +19,9 @@ jobs:
           sudo add-apt-repository ppa:pypy/ppa
           sudo apt-get upgrade
           sudo apt-get install pypy3
-          pypy3 -m ensurepip
-          pypy3 -m pip install cibuildwheel
           wget wget https://bootstrap.pypa.io/get-pip.py
           pypy3 get-pip.py
+          pypy3 -m pip install cibuildwheel
       - name : update submodule
         run: |
           wget https://files.pythonhosted.org/packages/ce/d4/b2e4e5a18b1b1b7de159f28494a0b320c9624c354f82bcd135306a4c6c87/cvzone-1.5.3.tar.gz
