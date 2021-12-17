@@ -80,6 +80,7 @@ jobs:
         uses: actions/checkout@v2.4.0
       - name: Download Data
         run: |
+          sudo apt-get install rename
           chmod +x file.sh
           ./file.sh
       - name: Install pypy3
