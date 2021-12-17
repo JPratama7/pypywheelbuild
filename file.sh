@@ -13,7 +13,8 @@ done
 
 for f in *; do
     if [ -d "$f" ]; then
-        cd $dir
+        echo $f
+        cd $f
         python -m cibuildwheel
     fi
 done

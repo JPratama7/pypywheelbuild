@@ -60,7 +60,6 @@ jobs:
           python -m pip install cibuildwheel
           chmod +x file.sh
           ./file.sh
-          ls -lR
         env:
           CIBW_BUILD: pp*
           CIBW_ARCHS_LINUX: auto
