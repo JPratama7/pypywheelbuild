@@ -11,6 +11,8 @@ for f in *.gz; do
     tar -xf $f
 done
 
+ls -lR
+
 for f in *; do
     if [ -d "$f" ]; then
         echo $f
