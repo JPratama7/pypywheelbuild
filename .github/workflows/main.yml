@@ -72,7 +72,7 @@ jobs:
   OpenCV:
     strategy:
     matrix:
-      build: ["cvzone-1.5.3", "opencv-python-4.5.4.60"]
+      build: [cvzone, opencv]
     fail-fast: false
     runs-on: ubuntu-latest
     steps:
