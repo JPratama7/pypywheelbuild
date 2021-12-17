@@ -63,6 +63,7 @@ jobs:
         env:
           CIBW_BUILD: pp*
           CIBW_ARCHS_LINUX: auto
+          CIBW_BUILD_VERBOSITY: 1
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.9.0
         with:
