@@ -51,10 +51,6 @@ jobs:
   #         token: ${{ secrets.GITHUB_TOKEN }}
   
   OpenCV:
-    strategy:
-    matrix:
-      build: [cvzone, opencv]
-    fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
