@@ -5,9 +5,11 @@ Linklist=(
 
 for f in "${Linklist[@]}"; do
     wget $f
-    tar -xf $f
 done
 
+for f in *.gz; do
+    tar -xf $f
+done
 
 for f in *; do
     if [ -d "$f" ]; then
