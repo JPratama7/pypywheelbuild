@@ -40,5 +40,5 @@ jobs:
         with:
           allowUpdates: true
           tag: "latest"
-          artifacts: "./*/*.whl"
+          artifacts: "./*/*/*.whl"
           token: ${{ secrets.GITHUB_TOKEN }}
