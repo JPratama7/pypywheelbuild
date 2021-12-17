@@ -3,67 +3,9 @@ on:
   workflow_dispatch:
 jobs:
 
-  cvzone:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install pypy3
-        run : |
-          sudo add-apt-repository ppa:pypy/ppa
-          sudo apt-get update
-          sudo apt-get install pypy3
-          wget https://bootstrap.pypa.io/get-pip.py
-          pypy3 get-pip.py
-          pypy3 -m pip install cibuildwheel
-      - name : Download file
-        run: |
-          wget https://files.pythonhosted.org/packages/ce/d4/b2e4e5a18b1b1b7de159f28494a0b320c9624c354f82bcd135306a4c6c87/cvzone-1.5.3.tar.gz
-          tar -xf *.tar.gz --strip-components 1
-      - uses: RalfG/python-wheels-manylinux-build@v0.4.2-manylinux2014_x86_64  
-        with:
-          python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'
-      - run: ls -lR
-      - name: Upload Artifact
-        uses: ncipollo/release-action@v1.9.0
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.whl"
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  OpenCV:
-    runs-on: ubuntu-latest
-    steps:
-      - name : Download file
-        run: |
-          wget https://files.pythonhosted.org/packages/bc/b6/e447d0302bc328f06b56dabd6742648372df63446725db56058a259dbda2/opencv-python-4.5.4.60.tar.gz
-          tar -xf *.tar.gz --strip-components 1
-      - uses: RalfG/python-wheels-manylinux-build@v0.4.2-manylinux2014_x86_64  
-        with:
-          python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'    
-          package-path:  '${{ matrix.folder }}'
-      - run: ls -lR
-      - name: Upload Artifact
-        uses: ncipollo/release-action@v1.9.0
-        with:
-          allowUpdates: true
-          tag: "latest"
-          artifacts: "./*/*.whl"
-          token: ${{ secrets.GITHUB_TOKEN }}
-  
-  # OpenCV:
-  #   strategy:
-  #   matrix:
-  #     build: [cvzone, opencv]
-  #   fail-fast: false
+  # cvzone:
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - name: Build packages for pypy3
-  #       uses: actions/checkout@v2.4.0
-  #     - name: Download Data
-  #       run: |
-  #         sudo apt-get install rename
-  #         chmod +x file.sh
-  #         ./file.sh
   #     - name: Install pypy3
   #       run : |
   #         sudo add-apt-repository ppa:pypy/ppa
@@ -72,14 +14,13 @@ jobs:
   #         wget https://bootstrap.pypa.io/get-pip.py
   #         pypy3 get-pip.py
   #         pypy3 -m pip install cibuildwheel
-  #     # - name: build wheel
-  #     #   run: |
-  #     #     cd cvzone-1.5.3
-  #     #     pypy3 -m cibuildwheel --output-dir wheelhouse
+  #     - name : Download file
+  #       run: |
+  #         wget https://files.pythonhosted.org/packages/ce/d4/b2e4e5a18b1b1b7de159f28494a0b320c9624c354f82bcd135306a4c6c87/cvzone-1.5.3.tar.gz
+  #         tar -xf *.tar.gz --strip-components 1
   #     - uses: RalfG/python-wheels-manylinux-build@v0.4.2-manylinux2014_x86_64  
   #       with:
-  #         python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'    
-  #         package-path:  '${{ matrix.build }}'
+  #         python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'
   #     - run: ls -lR
   #     - name: Upload Artifact
   #       uses: ncipollo/release-action@v1.9.0
@@ -88,3 +29,45 @@ jobs:
   #         tag: "latest"
   #         artifacts: "./*/*.whl"
   #         token: ${{ secrets.GITHUB_TOKEN }}
+
+  # OpenCV:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name : Download file
+  #       run: |
+  #         wget https://files.pythonhosted.org/packages/bc/b6/e447d0302bc328f06b56dabd6742648372df63446725db56058a259dbda2/opencv-python-4.5.4.60.tar.gz
+  #         tar -xf *.tar.gz --strip-components 1
+  #     - uses: RalfG/python-wheels-manylinux-build@v0.4.2-manylinux2014_x86_64  
+  #       with:
+  #         python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'    
+  #         package-path:  '${{ matrix.folder }}'
+  #     - run: ls -lR
+  #     - name: Upload Artifact
+  #       uses: ncipollo/release-action@v1.9.0
+  #       with:
+  #         allowUpdates: true
+  #         tag: "latest"
+  #         artifacts: "./*/*.whl"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  
+  OpenCV:
+    strategy:
+    matrix:
+      build: [cvzone, opencv]
+    fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - run: |
+          python -m pip install cibuildwheel
+          chmod +x file.sh
+          ./file.sh
+          ls -lR
+      - name: Upload Artifact
+        uses: ncipollo/release-action@v1.9.0
+        with:
+          allowUpdates: true
+          tag: "latest"
+          artifacts: "./*/*.whl"
+          token: ${{ secrets.GITHUB_TOKEN }}

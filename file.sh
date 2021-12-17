@@ -8,3 +8,8 @@ for f in "${Linklist[@]}"; do
     rename '[a-z]\w+' *.gz
     tar -xf $f
 done
+
+for dir in */ ; do
+    cd $dir
+    python -m cibuildwheel
+done
