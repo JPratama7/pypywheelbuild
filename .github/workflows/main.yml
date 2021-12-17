@@ -34,6 +34,7 @@ jobs:
         with:
           python-versions: 'pp37-pypy37_pp73 pp38-pypy38_pp73'    
           package-path:  'cvzone-1.5.3'
+      - run: ls -lR
       - name: Upload Artifact
         uses: ncipollo/release-action@v1.9.0
         with:
