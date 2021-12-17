@@ -19,7 +19,7 @@ jobs:
           sudo add-apt-repository ppa:pypy/ppa
           sudo apt-get upgrade
           sudo apt-get install pypy3
-          wget wget https://bootstrap.pypa.io/get-pip.py
+          wget https://bootstrap.pypa.io/get-pip.py
           pypy3 get-pip.py
           pypy3 -m pip install cibuildwheel
       - name : update submodule
