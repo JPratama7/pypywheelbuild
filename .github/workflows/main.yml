@@ -59,8 +59,7 @@ jobs:
         with:
           python-version: pypy-3.7-v7.3.3
       - run: |
-          pypy3 -m ensurepip
-          pypy3 -m pip install --upgrade pip
+          pypy3 -m pip install --upgrade wheel
           chmod +x file.sh
           ./file.sh
         env:
