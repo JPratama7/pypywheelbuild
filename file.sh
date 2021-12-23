@@ -16,7 +16,7 @@ for f in *; do
     if [ -d "$f" ]; then
         echo $f
         cd $f
-        python -m cibuildwheel
+        python -m wheel .
     fi
 done
 
