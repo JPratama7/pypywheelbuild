@@ -51,15 +51,15 @@ jobs:
       - uses: actions/checkout@v2
       - name: "Creating"
         run: |
-          pacman -Syyu --noconfirm wget
+          pacman -Syyu --noconfirm wget unzip
           wget https://raw.githubusercontent.com/JPratama7/pkgbuild-action/cpuv2/makepkg.conf
           wget https://raw.githubusercontent.com/JPratama7/pkgbuild-action/cpuv2/pacman.conf
           wget https://github.com/bazelbuild/bazel/releases/download/5.0.0/bazel-5.0.0-installer-linux-x86_64.sh
-          chmod +x bazel-5.0.0-installer-linux-x86_64.sh
-          ./bazel-5.0.0-installer-linux-x86_64.sh
           mv pacman.conf /etc/pacman.conf
           mv makepkg.conf /etc/makepkg.conf
-          pacman -Syyu --noconfirm base-devel git llvm-all python
+          pacman -Syyu --noconfirm base-devel git llvm-all python openjdk
+          chmod +x bazel-5.0.0-installer-linux-x86_64.sh
+          ./bazel-5.0.0-installer-linux-x86_64.sh
           git clone -b v2.9.1  https://github.com/tensorflow/tensorflow.git
           cd tensorflow
           bazel build --config=opt --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
