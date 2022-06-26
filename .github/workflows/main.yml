@@ -57,7 +57,7 @@ jobs:
           mv pacman.conf /etc/pacman.conf
           mv makepkg.conf /etc/makepkg.conf
           pacman -Syyu base-devel git wget llvm-all python bazel
-          git clone -r https://github.com/tensorflow/tensorflow.git
+          git clone -b v2.9.1  https://github.com/tensorflow/tensorflow.git
           cd tensorflow
           bazel build --config=opt --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
           bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
