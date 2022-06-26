@@ -51,6 +51,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: "Creating"
         run: |
+          pacman -Syyu wget
           wget https://raw.githubusercontent.com/JPratama7/pkgbuild-action/cpuv2/makepkg.conf
           wget https://raw.githubusercontent.com/JPratama7/pkgbuild-action/cpuv2/pacman.conf
           mv pacman.conf /etc/pacman.conf
