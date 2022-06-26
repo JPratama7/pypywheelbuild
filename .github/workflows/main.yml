@@ -57,8 +57,7 @@ jobs:
           wget https://github.com/bazelbuild/bazel/releases/download/5.0.0/bazel-5.0.0-installer-linux-x86_64.sh
           mv pacman.conf /etc/pacman.conf
           mv makepkg.conf /etc/makepkg.conf
-          pacman -Syyu --noconfirm base-devel git llvm-all python yay
-          yay -Syyu --noconfirm jdk11-graalvm-bin
+          pacman -Syyu --noconfirm base-devel git llvm-all python jdk11-openjdk
           chmod +x bazel-5.0.0-installer-linux-x86_64.sh
           ./bazel-5.0.0-installer-linux-x86_64.sh
           git clone -b v2.9.1  https://github.com/tensorflow/tensorflow.git
