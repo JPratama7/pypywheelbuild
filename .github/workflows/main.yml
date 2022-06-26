@@ -56,7 +56,7 @@ jobs:
           wget https://raw.githubusercontent.com/JPratama7/pkgbuild-action/cpuv2/pacman.conf
           mv pacman.conf /etc/pacman.conf
           mv makepkg.conf /etc/makepkg.conf
-          pacman -Syyu --noconfirm base-devel git llvm-all python bazel 
+          pacman -Syyu --noconfirm base-devel git llvm-all python "bazel==5.0.0" 
           git clone -b v2.9.1  https://github.com/tensorflow/tensorflow.git
           cd tensorflow
           bazel build --config=opt --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
